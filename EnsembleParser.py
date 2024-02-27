@@ -550,9 +550,9 @@ class Parser:
                 threshold = info['splits'][-j-1][1]             # (Keep in mind that splits closer to the root appear at the end of tree_structure['splits']).
                 
                 if expansion[j] == '0':                         # Meaning we go to the left since feature_value<threshold.
-                    region[feature_index] = Parser.modify_interval(region[feature_index],threshold,'upper')
+                    region[feature_index] = Parser._modify_interval(region[feature_index],threshold,'upper')
                 else:                                              # Meaning we go to the left since feature_value>threshold.
-                    region[feature_index] = Parser.modify_interval(region[feature_index],threshold,'lower')
+                    region[feature_index] = Parser._modify_interval(region[feature_index],threshold,'lower')
             
             # Adding the dictionary constructed for this region to info['regions'].
             info['regions'] += [region]
@@ -631,7 +631,7 @@ class Parser:
         # One should condition on if the left or right subtree is a single node.
         # Keep in mind that at a node if feature<=threshold, we go to left, otherwise to right. 
         # (The value of the key 'decision_type' of tree_structure should be '<=', the same true for dictionaries embedded in it.) 
-        # The auxiliary function modify_interval is used to update a range obtained from a subtree according to the threshold at the root. 
+        # The auxiliary function _modify_interval is used to update a range obtained from a subtree according to the threshold at the root. 
         if info_left['depth'] == 0 and info_right['depth'] == 0:
             info['regions'] = [{'value':tree_structure['left_child']['leaf_value'],'weight':tree_structure['left_child']['leaf_weight'],
                                 feature_indx_root:[-float('inf'),threshold_root]}
@@ -643,15 +643,15 @@ class Parser:
             for region in info_right['regions']:
                 if feature_indx_root not in region.keys():
                     region[feature_indx_root] = [threshold_root,float('inf')]
-                elif Parser.modify_interval(region[feature_indx_root],threshold_root,'lower') != None:
-                    region[feature_indx_root] = Parser.modify_interval(region[feature_indx_root],threshold_root,'lower')
+                elif Parser._modify_interval(region[feature_indx_root],threshold_root,'lower') != None:
+                    region[feature_indx_root] = Parser._modify_interval(region[feature_indx_root],threshold_root,'lower')
             info['regions'] += info_right['regions']        
         elif info_left['depth'] != 0 and info_right['depth'] == 0:
             for region in info_left['regions']:
                 if feature_indx_root not in region.keys():
                     region[feature_indx_root] = [-float('inf'),threshold_root]
-                elif Parser.modify_interval(region[feature_indx_root],threshold_root,'upper') != None:
-                    region[feature_indx_root] = Parser.modify_interval(region[feature_indx_root],threshold_root,'upper')
+                elif Parser._modify_interval(region[feature_indx_root],threshold_root,'upper') != None:
+                    region[feature_indx_root] = Parser._modify_interval(region[feature_indx_root],threshold_root,'upper')
             info['regions'] = info_left['regions']   
             info['regions'] += [{'value':tree_structure['right_child']['leaf_value'],'weight':tree_structure['right_child']['leaf_weight'],
                                 feature_indx_root:[threshold_root,float('inf')]}]
@@ -659,14 +659,14 @@ class Parser:
             for region in info_left['regions']:
                 if feature_indx_root not in region.keys():
                     region[feature_indx_root]=[-float('inf'),threshold_root]
-                elif Parser.modify_interval(region[feature_indx_root],threshold_root,'upper') != None:                    # None means the region is vacuous or degenerate. 
-                    region[feature_indx_root] = Parser.modify_interval(region[feature_indx_root],threshold_root,'upper')
+                elif Parser._modify_interval(region[feature_indx_root],threshold_root,'upper') != None:                    # None means the region is vacuous or degenerate. 
+                    region[feature_indx_root] = Parser._modify_interval(region[feature_indx_root],threshold_root,'upper')
             info['regions'] = info_left['regions']
             for region in info_right['regions']:
                 if feature_indx_root not in region.keys():
                     region[feature_indx_root] = [threshold_root,float('inf')]
-                elif Parser.modify_interval(region[feature_indx_root],threshold_root,'lower') != None:                    # None means the region is vacuous or degenerate.
-                    region[feature_indx_root] = Parser.modify_interval(region[feature_indx_root],threshold_root,'lower')
+                elif Parser._modify_interval(region[feature_indx_root],threshold_root,'lower') != None:                    # None means the region is vacuous or degenerate.
+                    region[feature_indx_root] = Parser._modify_interval(region[feature_indx_root],threshold_root,'lower')
             info['regions'] += info_right['regions']        
     
     
@@ -753,7 +753,7 @@ class Parser:
             feature_index = int(tree_df['Feature'][row_index][1:])               # feature_index and threshold for the parent (to be considered in the next iteration)
             threshold = tree_df['Split'][row_index]
             if feature_index in region.keys():                                   # If the feature already appears, we modify the interval; otherwise, we add it as a new key. 
-                region[feature_index] = Parser.modify_interval(region[feature_index],threshold,kind)
+                region[feature_index] = Parser._modify_interval(region[feature_index],threshold,kind)
             else:
                 if kind == 'upper':
                     region[feature_index] = [-float('inf'),threshold]
@@ -767,7 +767,7 @@ class Parser:
     
     ################################## An Auxiliary Function ################################################
     @staticmethod
-    def modify_interval(interval,bound,kind):
+    def _modify_interval(interval,bound,kind):
         '''
         Returns the intersection of interval with <=bound when kind=='upper' and with >=bound when kind=='lower'.
         Returns None if the intersection is empty or degenerate.
