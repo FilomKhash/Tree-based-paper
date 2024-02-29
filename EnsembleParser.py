@@ -95,10 +95,23 @@ class Parser:
     # The type of the boosting library will be recorded as well as the number of features and trees. 
     
     def __init__(self,model,model_type=None,is_pickle=False):
+        
+        '''
+        The constructor.
+        
+        Input
+        -----
+        model: 
+            A CatBoost, LightGBM or XGBoost classifier or regressor, or a string describing a path to a saved such ensemble. 
+        model_type: str
+            Either 'CatBoost', 'LightGBM' or 'XGBoost'. Must be provided as the library type when model is a string to a saved ensemble of one of these types which is not pickled, and is_pickle is False.
+        is_pickle: bool
+            If True, model should be a string to a pickled CatBoost, LightGBM or XGBoost ensemble. No need to provide model_type in that case.
+        '''
         if model is None:
             raise ValueError("Either a model or a path to a model should be provided.")
         
-        # Case 1) A path to the model file is provided which is not a pickle.
+        # Case 1) A path to the model file is provided which is not pickled.
         if isinstance(model,str) and not is_pickle:
             input_path = model
             assert os.path.exists(input_path), f"[Error] The file {input_path} does not exist."
