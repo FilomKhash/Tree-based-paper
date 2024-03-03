@@ -1,0 +1,47 @@
+{
+
+  "example_tag" : "experiment_dim_40_depth_4_12_32_threads",
+  
+  "pred_dim" : 40,
+  
+  "seed" : 123,
+
+  "ml_model_for_treeshap" : "gbm",
+
+  "sample_train_size" :  100000,
+
+  "sample_test_size"  :  25000,
+
+  "expl_size_catboost" : 10000,
+
+  "expl_size_catboost_regular" : 100,
+
+  "n_threads" : 32,
+
+  "ave_size"  : [1000, 5000, 10000, 20000 ],
+
+  "lin_range" : [1.0,5.0],
+
+  "inter_range": [-0.5,0.5],
+  
+  "max_depth"    : [4,5,6,7,8,9,10,11,12],
+
+  "catboost_params" : {  
+    "n_estimators" : 300,     
+    "subsample": 0.8,
+    "early_stopping_rounds" : null,
+    "learning_rate": 0.1,
+    "verbose": false                 
+    },
+
+                
+  "progress_bar_status" : true,
+  
+  "pipeline" :
+    {
+      "step_1_train"                    : 1,
+      "step_2_explain_catboost_dfs"     : 1,
+      "step_3_explain_catboost_native"  : 1,
+      "step_4_plot"                     : 1
+    }
+}
