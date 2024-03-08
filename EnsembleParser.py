@@ -226,7 +226,7 @@ class Parser:
             
         # Recovering the names of features of the training data.
         if self._type == 'CatBoost':
-            self._feature_names = self._ml_model.get_feature_importance(prettified = True)['Feature Id'].tolist()
+            self._feature_names = self._ml_model.feature_names_
         elif self._type == 'LightGBM':
             self._feature_names = self._Loaded['feature_names']
         else:
