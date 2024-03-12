@@ -6,6 +6,7 @@
 # (2) For any given experiment in the folder results
 #     the json file is located in results/<experiment_tag>/<experiment_tag>.json
 # 
+# (3) CatBoost version 1.2
 ################################################################################
 # catboost libraries path:
 import os
