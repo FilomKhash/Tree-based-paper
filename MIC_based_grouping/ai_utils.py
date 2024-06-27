@@ -2,7 +2,7 @@
 # Methods for hierarchical clustering with MIC  
 ############################################## 
 # Code authors:
-# 	Alexey Miroshnikov
+#   Alexey Miroshnikov
 #   Konstandinos Kotsiopoulos
 # Consultant:
 # 	Khashayar Filom
