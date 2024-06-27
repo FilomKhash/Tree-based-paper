@@ -1,3 +1,18 @@
+############################################## 
+# Methods for hierarchical clustering with MIC  
+############################################## 
+# Code authors:
+# 	Alexey Miroshnikov
+#   Konstandinos Kotsiopoulos
+# Consultant:
+# 	Khashayar Filom
+############################################## 
+# version 1 (Feb 2024) 
+# packages:
+#	minepy 1.2.6
+#	scipy 1.9.3
+###############################################
+
 import minepy
 from copy import copy
 from scipy.cluster import hierarchy
