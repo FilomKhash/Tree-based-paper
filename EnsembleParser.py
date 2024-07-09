@@ -109,7 +109,7 @@ class Parser:
             If True, model should be a string to a pickled CatBoost, LightGBM or XGBoost ensemble. No need to provide model_type in that case.
         '''
         if model is None:
-            raise ValueError("Either a model or a path to a model should be provided.")
+            raise TypeError("Either a model or a path to a model should be provided.")
         
         # Case 1) A path to the model file is provided which is not pickled.
         if isinstance(model,str) and not is_pickle:
@@ -310,7 +310,7 @@ class Parser:
         assert self._type in {'CatBoost','LightGBM','XGBoost'}
         if tree_index != None:
             if tree_index not in range(self._num_trees):
-                raise ValueError(f'The ensemble has {self._num_trees} trees. The provided index {tree_index} must be in the range 0<= <{self._num_trees} because .')
+                raise ValueError(f'The ensemble has {self._num_trees} trees. The provided index {tree_index} must be in the range 0<= <{self._num_trees}.')
             if self._type == 'CatBoost':
                 tree_structure = self._Loaded['oblivious_trees'][tree_index]                           # Isolating the part of the dumped dictionary that captures the desired tree. 
                 return self._retrieve_catboost(tree_structure)

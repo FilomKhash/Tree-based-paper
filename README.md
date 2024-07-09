@@ -1,7 +1,7 @@
 # Tree-based-paper
 This repository contains codes for the third arXiv version of the paper 
 
-<p align=center> <strong>On marginal feature attributions of tree-based models</strong> (https://arxiv.org/abs/2302.08434)
+<p align=center> <strong>On marginal feature attributions of tree-based models</strong> (https://doi.org/10.3934/fods.2024021)
 
 This repository contains the following folders:
 
